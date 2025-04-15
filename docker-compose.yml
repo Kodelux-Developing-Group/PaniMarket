@@ -1,0 +1,30 @@
+services:
+  app:
+    build: .
+    container_name: kodelux-panimarket-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - DATABASE_URL=postgresql://postgres:example@db:5432/panimarket?schema=public
+      - NODE_ENV=development
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17.4-alpine
+    container_name: kodelux-panimarket-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: panimarket
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
