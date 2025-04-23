@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 async function fetchProducts() {
   return await prisma.product.findMany({
-    select: { id: true,name: true,description: true ,imageUrl: true,price: true,
+    select: { id: true,name: true,imageUrl: true,price: true,
     },
   });
 }
