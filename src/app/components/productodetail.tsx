@@ -27,7 +27,7 @@ function ProductDetail({ productId }: { productId: number }) {
     fetchProduct();
   }, [productId]);
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) return <p>Cargaando...</p>;
   if (!product) return <p>Producto no encontrado</p>;
 
   return (
