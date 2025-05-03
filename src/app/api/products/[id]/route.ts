@@ -3,18 +3,28 @@ import { NextRequest, NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
-    const urlParts = req.nextUrl.pathname.split("/"); 
-    const productId = urlParts[urlParts.length - 1]; 
+    const productId = params.id;
 
     if (!productId || isNaN(Number(productId))) {
       return NextResponse.json({ message: "Product ID inválido" }, { status: 400 });
     }
 
     const product = await prisma.product.findUnique({
-      where: { id: Number(productId) },
-      select: { id: true, name: true, imageUrl: true, price: true, description: true },
+      where: {
+        id: Number(productId),
+      },
+      select: {
+        id: true,
+        name: true,
+        imageUrl: true,
+        price: true,
+        description: true,
+      },
     });
 
     if (!product) {
